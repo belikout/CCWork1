@@ -624,7 +624,43 @@ public class ALU {
 	 */
 	public String signedAddition (String operand1, String operand2, int length) {
 		// TODO YOUR CODE HERE.
-		return null;
+		String sign="";
+		sign+=operand1.charAt(0);
+		sign+=operand2.charAt(0);
+		operand1=operand1.substring(1);
+		operand2=operand2.substring(1);
+		String res="";
+		switch(sign){
+		case "00":res=adder(operand1,negation(operand2),'0',length);
+		break;
+		case "10":res=adder(negation(operand1),operand2,'1',length);
+		break;
+		case "01":res=adder(operand1,negation(operand2),'1',length);
+		break;
+		case "11":{
+			res=oneAdder(negation(adder(operand1,operand2,'0',length)));
+		if(res.charAt(0)=='1')
+			res='1'+res.substring(2);
+		else
+			res='0'+res.substring(2);
+			}
+		break;
+		}
+		char over=res.charAt(0);
+		char sn=res.charAt(1);
+		res=res.substring(1);
+		if(sn=='1'){
+			res=oneAdder(negation(res)).substring(1);
+			res='1'+res;
+		}
+		else
+			res='0'+res;
+		if(over=='1')
+			res='1'+res;
+		else
+			res='0'+res;
+		
+		return res;
 	}
 	
 	/**
