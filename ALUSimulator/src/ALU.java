@@ -333,17 +333,17 @@ public class ALU {
 	 * @return operand按位取反的结果
 	 */
 	public String negation (String operand) {
-		// TODO YOUR CODE HERE.
-		String num=null;
-		for(int i=0;i<operand.length();i++){
-			if(operand.charAt(i)=='1'){
-				num+='0';
+			// TODO YOUR CODE HERE.
+			String num="";
+			for(int i=0;i<operand.length();i++){
+				if(operand.charAt(i)=='1'){
+					num+='0';
+				}
+				else{
+					num+='1';
+				}
 			}
-			else{
-				num+='1';
-			}
-		}
-		return num.substring(4, num.length());
+			return num;
 	}
 	
 	/**
@@ -564,7 +564,9 @@ public class ALU {
 	 */
 	public String integerAddition (String operand1, String operand2, int length) {
 		// TODO YOUR CODE HERE.
-		return null;
+		String res="";
+		res=adder(operand1,operand2,'0',length);
+		return res;
 	}
 	
 	/**
@@ -577,7 +579,11 @@ public class ALU {
 	 */
 	public String integerSubtraction (String operand1, String operand2, int length) {
 		// TODO YOUR CODE HERE.
-		return null;
+		operand2=negation(operand2);
+		operand2=oneAdder(operand2).substring(1);
+		String res="";
+		res=adder(operand1,operand2,'0',length);
+		return res;
 	}
 	
 	/**
