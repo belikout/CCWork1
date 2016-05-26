@@ -627,34 +627,37 @@ public class ALU {
 		String sign="";
 		sign+=operand1.charAt(0);
 		sign+=operand2.charAt(0);
-		operand1=operand1.substring(1);
-		operand2=operand2.substring(1);
+		operand1='0'+operand1.substring(1);
+		operand2='0'+operand2.substring(1);
 		String res="";
 		switch(sign){
-		case "00":res=adder(operand1,negation(operand2),'0',length);
+		case "00":res=adder(operand1,operand2,'0',length+4).substring(1);
 		break;
-		case "10":res=adder(negation(operand1),operand2,'1',length);
+		case "10":res=adder(negation(operand1),operand2,'1',length+4).substring(1);
 		break;
-		case "01":res=adder(operand1,negation(operand2),'1',length);
+		case "01":res=adder(operand1,negation(operand2),'1',length+4).substring(1);
 		break;
 		case "11":{
-			res=oneAdder(negation(adder(operand1,operand2,'0',length)));
-		if(res.charAt(0)=='1')
-			res='1'+res.substring(2);
-		else
-			res='0'+res.substring(2);
-			}
+			res=oneAdder(negation(adder(operand1,operand2,'0',length+4).substring(1))).substring(1);
 		break;
 		}
-		char over=res.charAt(0);
-		char sn=res.charAt(1);
-		res=res.substring(1);
+		}
+		char over;
+		char sn=res.charAt(0);
+		System.out.println(res);
 		if(sn=='1'){
 			res=oneAdder(negation(res)).substring(1);
-			res='1'+res;
+			over=res.charAt(3);
+			System.out.println(res);
+			res='1'+res.substring(4);
+			System.out.println(res);
 		}
-		else
-			res='0'+res;
+		else{
+			over=res.charAt(3);
+			System.out.println(res);
+			res='0'+res.substring(4);
+			
+		}
 		if(over=='1')
 			res='1'+res;
 		else
