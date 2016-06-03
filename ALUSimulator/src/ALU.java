@@ -638,7 +638,77 @@ public class ALU {
 	 */
 	public String integerDivision (String operand1, String operand2, int length) {
 		// TODO YOUR CODE HERE.
-		return null;
+		while(operand1.length()<length)
+			operand1 = operand1.charAt(0)+operand1;
+		while(operand2.length()<length)
+			operand2 = operand2.charAt(0)+operand2;
+		boolean neednegation = false;
+		if(operand1.charAt(0)!=operand2.charAt(0))
+			neednegation = true;
+		String remainder = "";
+		for(int i=length;i>=1;i--)
+			remainder = remainder + operand1.charAt(0);
+		String quotient = operand1;
+		String divisor = operand2;
+		String all = remainder + quotient;
+		for(int i=length;i>=1;i--){
+		    boolean k=true;
+			remainder = all.substring(0,length);
+			quotient = all.substring(length);
+			if(remainder.charAt(0)==divisor.charAt(0))
+				remainder = integerSubtraction(remainder,divisor,length).substring(1);
+			else
+				remainder = integerAddition(remainder,divisor,length).substring(1);
+			all = remainder + quotient;
+			
+			if(remainder.charAt(0)==divisor.charAt(0))
+				k=true;
+			else
+				k=false;
+			if(k)
+			all = oneAdder(leftShift(all,1)).substring(1);
+			else
+		    all=leftShift(all,1);
+		}
+		
+		boolean k=true;
+		remainder = all.substring(0,length);
+		quotient = all.substring(length);
+		if(remainder.charAt(0)==divisor.charAt(0))
+			remainder = integerSubtraction(remainder,divisor,length).substring(1);
+		else
+			remainder = integerAddition(remainder,divisor,length).substring(1);
+		if(remainder.charAt(0)==divisor.charAt(0))
+			k=true;
+		else
+			k=false;
+	
+		if(neednegation){
+			if(quotient.charAt(0)=='1'){
+				quotient=oneAdder(leftShift(quotient,1)).substring(1);
+			if(k){
+				quotient=oneAdder(quotient).substring(1);
+			}}
+			else
+				quotient=oneAdder(negation(quotient)).substring(1);
+		}
+		else{
+			if(quotient.charAt(0)=='0'){
+				quotient=leftShift(quotient,1);
+			if(k){
+				quotient=oneAdder(quotient).substring(1);
+			}}
+			else
+				quotient=oneAdder(negation(quotient)).substring(1);
+		}
+		if(remainder.charAt(0)!=operand1.charAt(0))
+			remainder = integerSubtraction(remainder,divisor,length).substring(1);
+		char p='0';
+		if(Integer.parseInt(integerTrueValue(remainder))!=Integer.parseInt(integerTrueValue(operand1))%Integer.parseInt(integerTrueValue(operand2)))
+			p='1';
+		if(Integer.parseInt(integerTrueValue(quotient))!=Integer.parseInt(integerTrueValue(operand1))/Integer.parseInt(integerTrueValue(operand2)))
+			p='1';
+		return p+quotient + remainder;
 	}
 	
 	/**
