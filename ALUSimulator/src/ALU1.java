@@ -64,11 +64,11 @@ import org.junit.Test;
 			assertEquals("11",alu.fullAdder('1', '1', '1'));
 		}
 		@Test
-		//public void test12() {
-//			assertEquals("001010010",alu.claAdder("00001100", "00011100", '1'));
-//			assertEquals("001101000",alu.claAdder("00100001","00010010",'1'));
-//			assertEquals("000000001",alu.claAdder("10000000","10000000",'0'));
-		//}
+		/*public void test12() {
+			assertEquals("001010010",alu.claAdder("00001100", "00011100", '1'));
+			assertEquals("001101000",alu.claAdder("00100001","00010010",'1'));
+			assertEquals("000000001",alu.claAdder("10000000","10000000",'0'));
+		}*/
 		//@Test
 		/*public void test13() {
 			assertEquals("11111001110",alu.integerAddition("1000101","0100010",'0',10));

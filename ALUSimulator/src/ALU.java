@@ -596,7 +596,36 @@ public class ALU {
 	 */
 	public String integerMultiplication (String operand1, String operand2, int length) {
 		// TODO YOUR CODE HERE.
-		return null;
+		while(operand1.length()<length)
+			operand1 = operand1.charAt(0)+operand1;
+		while(operand2.length()<length)
+			operand2 = operand2.charAt(0)+operand2;
+		String cal = operand2 + "0";
+		String product = "";
+		for(int i=length;i>=1;i--)
+			product = product + "0";
+		String y = operand2;
+		String result = product + y;
+		for(int i=length;i>=1;i--){
+			int temp = cal.charAt(i)-cal.charAt(i-1);
+			product = result.substring(0,length);
+			y = result.substring(length);
+			if(temp==1){
+				product =integerAddition(product,operand1,length).substring(1,length+1);
+			}else if(temp==-1){
+				product = integerSubtraction(product,operand1,length).substring(1,length+1);
+			}
+			result = product + y;
+			result = ariRightShift(result,1);
+		}
+		String trueres=oneAdder(negation(result)).substring(1);
+		if(result.charAt(0)=='1'&&Integer.parseInt(integerTrueValue(trueres))>Math.pow(2, length-1))
+			result='1'+result.substring(length);
+		else if(result.charAt(0)=='0'&&Integer.parseInt(integerTrueValue(result))>(Math.pow(2, length-1)-1))
+			result='1'+result.substring(length);
+		else
+			result='0'+result.substring(length);
+		return result;
 	}
 	
 	/**
