@@ -102,7 +102,7 @@ public class ALU {
 		}
 		
 		two=two.substring(4, two.length());
-		System.out.println(two);
+		//System.out.println(two);
 		for(int i=0;i<two.length();i++){
 			if(two.charAt(i)=='1'){
 				xone=i+1;
@@ -130,7 +130,7 @@ public class ALU {
 			}
 		}
 		num+=e;
-		System.out.println(s);
+		//System.out.println(s);
 		if(s.length()==sLength){
 		}
 		else  if(s.length()>sLength){
@@ -142,7 +142,7 @@ public class ALU {
 				s+='0';
 			}
 		}
-		System.out.println(s);
+		//System.out.println(s);
 		num+=s;
 		num=num.substring(4, num.length());
 		return num;
@@ -307,7 +307,7 @@ public class ALU {
 			//结果为无穷或非数
 			else if(allOne==true){
 				boolean sZero=true;
-				for(int i=0;i<eLength;i++){
+				for(int i=0;i<sLength;i++){
 					if(operand.charAt(i+1+eLength)=='1'){
 						sZero=false;
 						break;
@@ -689,7 +689,7 @@ public class ALU {
 			k=true;
 		else
 			k=false;
-		System.out.println(remainder);
+		//System.out.println(remainder);
 		if(neednegation){
 			if(quotient.charAt(0)=='1'){
 				quotient=oneAdder(leftShift(quotient,1)).substring(1);
@@ -720,7 +720,7 @@ public class ALU {
 			remainder=integerAddition(remainder,divisor,length).substring(1);
 			quotient=integerSubtraction(quotient,"0001",length).substring(1);
 		}
-		System.out.println(remainder);
+		//System.out.println(remainder);
 		char p='0';
 		if(Integer.parseInt(integerTrueValue(remainder))!=Integer.parseInt(integerTrueValue(operand1))%Integer.parseInt(integerTrueValue(operand2)))
 			p='1';
@@ -761,17 +761,17 @@ public class ALU {
 		}
 		char over;
 		char sn=res.charAt(0);
-		System.out.println(res);
+		//System.out.println(res);
 		if(sn=='1'){
 			res=oneAdder(negation(res)).substring(1);
 			over=res.charAt(3);
-			System.out.println(res);
+			//System.out.println(res);
 			res='1'+res.substring(4);
-			System.out.println(res);
+			//System.out.println(res);
 		}
 		else{
 			over=res.charAt(3);
-			System.out.println(res);
+			//System.out.println(res);
 			res='0'+res.substring(4);
 			
 		}

@@ -40,21 +40,21 @@ import org.junit.Test;
 			assertEquals("11111000",alu.leftShift("01011111", 3));
 		}
 		@Test
-	/*	public void test9() {
-			assertEquals("110111001",alu.rightAriShift("101110011", 1));
-			assertEquals("11111",alu.rightAriShift("11111", 0));
-			assertEquals("00001",alu.rightAriShift("00010", 1));
-			assertEquals("00000",alu.rightAriShift("00001", 3));
+		public void test9() {
+			assertEquals("110111001",alu.ariRightShift("101110011", 1));
+			assertEquals("11111",alu.ariRightShift("11111", 0));
+			assertEquals("00001",alu.ariRightShift("00010", 1));
+			assertEquals("00000",alu.ariRightShift("00001", 3));
 		}
-		@Test*/
-	/*	public void test10() {
-			assertEquals("010111001",alu.rightLogShift("101110011", 1));
-			assertEquals("11111",alu.rightLogShift("11111", 0));
-			assertEquals("00001",alu.rightLogShift("00010", 1));
-			assertEquals("00000",alu.rightLogShift("00001", 3));
-			assertEquals("00010",alu.rightLogShift("10001", 3));
+		@Test
+		public void test10() {
+			assertEquals("010111001",alu.logRightShift("101110011", 1));
+			assertEquals("11111",alu.logRightShift("11111", 0));
+			assertEquals("00001",alu.logRightShift("00010", 1));
+			assertEquals("00000",alu.logRightShift("00001", 3));
+			assertEquals("00010",alu.logRightShift("10001", 3));
 		}
-		@Test*/
+		@Test
 		public void test11() {
 			assertEquals("00",alu.fullAdder('0', '0', '0'));
 			assertEquals("01",alu.fullAdder('1', '0', '0'));
@@ -63,45 +63,36 @@ import org.junit.Test;
 			assertEquals("10",alu.fullAdder('1', '0', '1'));
 			assertEquals("11",alu.fullAdder('1', '1', '1'));
 		}
-		@Test
-		/*public void test12() {
-			assertEquals("001010010",alu.claAdder("00001100", "00011100", '1'));
-			assertEquals("001101000",alu.claAdder("00100001","00010010",'1'));
-			assertEquals("000000001",alu.claAdder("10000000","10000000",'0'));
+		/*@Test
+		 * 要测claAdder的话要自己写4位的测试用例
+		public void test12() {
+			assertEquals("0001010010",alu.claAdder("00001100", "00011100", '1'));
+			assertEquals("0001101000",alu.claAdder("00100001","00010010",'1'));
+			assertEquals("1000000001",alu.claAdder("10000000","10000000",'0'));
 		}*/
-		//@Test
-	/*	public void test13() {
-			assertEquals("11111001110",alu.integerAddition("1000101","0100010",'0',10));
-			assertEquals("11110",alu.integerAddition("1101","0010",'0',4));
-			assertEquals("001110",alu.integerAddition("0101","0010",'0',5));
-			assertEquals("111110",alu.integerAddition("1101","0010",'0',5));
-			assertEquals("101111",alu.integerAddition("1101","1010",'0',5));
-			assertEquals("110001",alu.integerAddition("1101","1010",'1',5));
-			assertEquals("111101001110111001100101001010100",alu.integerAddition(
-					"11001010001010010101001010010101",
-					"00101010110001010001001010010100",'1',32));
-//			assertEquals("10100",alu.integerAddition("0111","0011",'0',4));
-//			assertEquals("01000",alu.integerAddition("0100","0000",'0',4));
-			assertEquals("01011",alu.integerAddition("1000","1101",'0',4));
-			assertEquals("00001",alu.integerAddition("1001","0110",'1',4));
+		@Test
+	public void test13() {
+			assertEquals("11010",alu.integerAddition("0111","0011",4));
+			assertEquals("00100",alu.integerAddition("0100","0000",4));
+			assertEquals("10101",alu.integerAddition("1000","1101",4));
 		}
-		@Test*/
-		//public void test14() {
-//			assertEquals("10110",alu.integerSubtraction("0101","1010",4));
-//			assertEquals("000010110",alu.integerSubtraction("0101","1010",8));
-		//	assertEquals("01001",alu.integerSubtraction("0111","0011",4));
-//			assertEquals("01000",alu.integerSubtraction("0100","0000",4));
-//			assertEquals("10110",alu.integerSubtraction("1000","1101",4));
-//			assertEquals("00111",alu.integerSubtraction("1001","0110",4));
-		//}
-		//@Test
-		/*public void test15() {
-//			assertEquals("00000110",alu.integerMultiplication("0011", "0010", 4));
-//			assertEquals("11111000",alu.integerMultiplication("1110", "0100", 4));
-//			assertEquals("00001000",alu.integerMultiplication("0100", "0010", 4));
-//			assertEquals("00000110",alu.integerMultiplication("1101", "1110", 4));
+		@Test
+		public void test14() {
+			assertEquals("11011",alu.integerSubtraction("0101","1010",4));
+			assertEquals("000001011",alu.integerSubtraction("0101","1010",8));
+			assertEquals("00100",alu.integerSubtraction("0111","0011",4));
+			assertEquals("00100",alu.integerSubtraction("0100","0000",4));
+			assertEquals("01011",alu.integerSubtraction("1000","1101",4));
+			assertEquals("10011",alu.integerSubtraction("1001","0110",4));
 		}
-		@Test*/
+		@Test
+		public void test15() {
+			assertEquals("00110",alu.integerMultiplication("0011", "0010", 4));
+			assertEquals("01000",alu.integerMultiplication("1110", "0100", 4));
+			assertEquals("11000",alu.integerMultiplication("0100", "0010", 4));
+			assertEquals("00110",alu.integerMultiplication("1101", "1110", 4));
+		}
+		@Test
 		public void test16() {
 			assertEquals("000100001",alu.integerDivision("0111", "0011", 4));
 			assertEquals("011100001",alu.integerDivision("0111", "1101", 4));
@@ -134,8 +125,8 @@ import org.junit.Test;
 //			assertEquals("00000000100000000000000000000000",alu.floatRepresentation(Float.MIN_NORMAL+"", 23, 8));
 //			assertEquals("00000000000000000000000000000010",alu.floatRepresentation(Float.MIN_VALUE*2+"", 23, 8));
 		}
-		
-		/*public void test4() {
+		//@Test
+		public void test4() {
 //			assertEquals("0"
 //					+ "11111111111"
 //					+ "0000000000000000000000000000000000000000000000000001",
@@ -143,7 +134,7 @@ import org.junit.Test;
 			assertEquals("0"
 					+ "11111111110"
 					+ "1111111111111111111111111111111111111111111111111111",
-					alu.ieee754(Double.MAX_VALUE+"", 64));
+					alu.ieee754((Double.MAX_VALUE-1)+"", 64));
 			assertEquals("0"
 					+ "00000000001"
 					+ "0000000000000000000000000000000000000000000000000000",
@@ -153,46 +144,46 @@ import org.junit.Test;
 					+ "0000000000000000000000000000000000000000000000000001",
 					alu.ieee754(Double.MIN_VALUE+"", 64));
 		}
-	*/
-	/*	public void test6() {
+		@Test
+	public void test6() {
 			assertEquals("0",alu.floatTrueValue(
 					"0"
 					+ "00000000"
-					+ "00000000000000000000000", 23, 8));
+					+ "00000000000000000000000", 8, 23));
 			assertEquals("0",alu.floatTrueValue(
 					"1"
 					+ "00000000"
-					+ "00000000000000000000000", 23, 8));
-			assertEquals("+Inf",alu.floatTrueValue(
+					+ "00000000000000000000000", 8, 23));
+			assertEquals("Inf",alu.floatTrueValue(
 					"0"
 					+ "11111111"
-					+ "00000000000000000000000", 23, 8));
+					+ "00000000000000000000000", 8, 23));
 			assertEquals("-Inf",alu.floatTrueValue(
 					"1"
 					+ "11111111"
-					+ "00000000000000000000000", 23, 8));
+					+ "00000000000000000000000", 8, 23));
 			assertEquals("NaN",alu.floatTrueValue(
 					"0"
 					+ "11111111"
-					+ "00000000000000000000100", 23, 8));
+					+ "00000000000000000000100",  8, 23));
 			assertEquals("NaN",alu.floatTrueValue(
 					"1"
 					+ "11111111"
-					+ "00000001111000000000001", 23, 8));
+					+ "00000001111000000000001",  8, 23));
 			assertEquals("384.1300048828125",alu.floatTrueValue(
 					"0"
 					+ "10000111"
-					+ "10000000001000010100100", 23, 8));
+					+ "10000000001000010100100", 8, 23));
 			assertEquals("85.625",alu.floatTrueValue(
 							"0"
 							+ "100101"
-							+ "010101101", 9, 6));
+							+ "010101101",6,9));
 			assertEquals("-65.25",alu.floatTrueValue(
 					"1"
 					+ "10000101"
-					+ "00000101000000000000000", 23, 8));
+					+ "00000101000000000000000", 8, 23));
 		}
-		@Test*/
+		
 		/*public void test17() {
 			//缁堜簬瀹屾垚浜嗭紝澶紑蹇冧簡o(*锟ｂ柦锟�*)銉�
 			assertEquals(
@@ -578,63 +569,6 @@ import org.junit.Test;
 							+ "00000001"
 							+ "11000000000000000000000", 
 							 23, 8));
-		}
-		@Test*/
-		/*public void test1() {
-			assertEquals("11",alu.calculation("5+6="));
-			assertEquals("-1",alu.calculation("5+(-6)="));
-			assertEquals("1",alu.calculation("-5+6="));
-			assertEquals("-11",alu.calculation("-5+(-6)="));
-			assertEquals("1",alu.calculation("(-5)+6="));
-			assertEquals("-11",alu.calculation("(-5)+(-6)="));
-			
-			assertEquals("-1",alu.calculation("5-6="));
-			assertEquals("11",alu.calculation("5-(-6)="));
-			assertEquals("-11",alu.calculation("-5-6="));
-			assertEquals("1",alu.calculation("-5-(-6)="));
-			assertEquals("-11",alu.calculation("(-5)-6="));
-			assertEquals("1",alu.calculation("(-5)-(-6)="));
-			
-			assertEquals("30",alu.calculation("5*6="));
-			assertEquals("-30",alu.calculation("5*(-6)="));
-			assertEquals("-30",alu.calculation("-5*6="));
-			assertEquals("30",alu.calculation("-5*(-6)="));
-			assertEquals("-30",alu.calculation("(-5)*6="));
-			assertEquals("30",alu.calculation("(-5)*(-6)="));
-			
-			assertEquals("2",alu.calculation("7/3="));
-			assertEquals("-2",alu.calculation("7/(-3)="));
-			assertEquals("-2",alu.calculation("-7/3="));
-			assertEquals("2",alu.calculation("-7/(-3)="));
-			assertEquals("-2",alu.calculation("(-7)/3="));
-			assertEquals("2",alu.calculation("(-7)/(-3)="));
-			assertEquals("11.5",alu.calculation("5.5+6="));
-			assertEquals("-1.5",alu.calculation("5+(-6.5)="));
-			assertEquals("0.5",alu.calculation("-5.5+6="));
-			assertEquals("-11.5",alu.calculation("-5.5+(-6)="));
-			assertEquals("1.5",alu.calculation("(-5)+6.5="));
-			assertEquals("-11.5",alu.calculation("(-5.5)+(-6)="));
-			
-			assertEquals("-1.0",alu.calculation("5.5-6.5="));
-			assertEquals("12.0",alu.calculation("5.5-(-6.5)="));
-			assertEquals("-12.0",alu.calculation("-5.5-6.5="));
-			assertEquals("1.0",alu.calculation("-5.5-(-6.5)="));
-			assertEquals("-12.0",alu.calculation("(-5.5)-6.5="));
-			assertEquals("1.0",alu.calculation("(-5.5)-(-6.5)="));
-			
-			assertEquals("35.75",alu.calculation("5.5*6.5="));
-			assertEquals("-32.5",alu.calculation("5*(-6.5)="));
-			assertEquals("-33.0",alu.calculation("-5.5*6="));
-			assertEquals("32.5",alu.calculation("-5*(-6.5)="));
-			assertEquals("-35.75",alu.calculation("(-5.5)*6.5="));
-			assertEquals("33.0",alu.calculation("(-5.5)*(-6)="));
-			
-			assertEquals("2.3333332538604736",alu.calculation("7.0/3="));
-			assertEquals("-2.5",alu.calculation("7.5/(-3)="));
-			assertEquals("-0.21875",alu.calculation("-7/32.0="));
-			assertEquals("2.5999999046325684",alu.calculation("-7.8/(-3)="));
-			assertEquals("-2.4666666984558105",alu.calculation("(-7.4)/3="));
-			assertEquals("2.3333332538604736",alu.calculation("(-7)/(-3.0)="));
 		}*/
 	}
 
