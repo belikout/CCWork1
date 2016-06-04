@@ -651,6 +651,7 @@ public class ALU {
 		String quotient = operand1;
 		String divisor = operand2;
 		String all = remainder + quotient;
+	
 		for(int i=length;i>=1;i--){
 		    boolean k=true;
 			remainder = all.substring(0,length);
@@ -660,17 +661,20 @@ public class ALU {
 			else
 				remainder = integerAddition(remainder,divisor,length).substring(1);
 			all = remainder + quotient;
-			
 			if(remainder.charAt(0)==divisor.charAt(0))
 				k=true;
 			else
 				k=false;
-			if(k)
+			if(k){
 			all = oneAdder(leftShift(all,1)).substring(1);
-			else
-		    all=leftShift(all,1);
-		}
 		
+			}
+			else{
+		    all=leftShift(all,1);
+		  
+			}
+			
+		}
 		boolean k=true;
 		remainder = all.substring(0,length);
 		quotient = all.substring(length);
@@ -682,7 +686,7 @@ public class ALU {
 			k=true;
 		else
 			k=false;
-	
+		//System.out.println(remainder);
 		if(neednegation){
 			if(quotient.charAt(0)=='1'){
 				quotient=oneAdder(leftShift(quotient,1)).substring(1);
@@ -701,14 +705,17 @@ public class ALU {
 			else
 				quotient=oneAdder(negation(quotient)).substring(1);
 		}
-		if(remainder.charAt(0)!=operand1.charAt(0))
+		if(remainder.charAt(0)!=operand1.charAt(0)&&remainder.charAt(0)=='0')
 			remainder = integerSubtraction(remainder,divisor,length).substring(1);
+		if(remainder.charAt(0)!=operand1.charAt(0)&&remainder.charAt(0)=='1')
+			remainder = integerAddition(remainder,divisor,length).substring(1);
+		//System.out.println(remainder);
 		char p='0';
 		if(Integer.parseInt(integerTrueValue(remainder))!=Integer.parseInt(integerTrueValue(operand1))%Integer.parseInt(integerTrueValue(operand2)))
 			p='1';
 		if(Integer.parseInt(integerTrueValue(quotient))!=Integer.parseInt(integerTrueValue(operand1))/Integer.parseInt(integerTrueValue(operand2)))
 			p='1';
-		return p+quotient + remainder;
+		return p+quotient+remainder;
 	}
 	
 	/**
