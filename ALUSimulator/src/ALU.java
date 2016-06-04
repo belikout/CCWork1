@@ -17,9 +17,15 @@ public class ALU {
 		// TODO YOUR CODE HERE.
 		String nu=null;
 		String num=null;
+		if(Double.parseDouble(number)==(-1)*Math.pow(2, length-1)){
+			num="1";
+			for(int i=0;i<length-1;i++){
+				num+='0';
+			}
+		}else{
 		if(number.charAt(0)!='-'){
-			double k=Double.parseDouble(number);
-			nu=Integer.toBinaryString((int)k);
+			int k=Integer.parseInt(number);
+			nu=Integer.toBinaryString(k);
 			for(int i=0;i<length-nu.length();i++){
 				num+='0';
 			}
@@ -29,8 +35,8 @@ public class ALU {
 		else{
 			int m=0;
 			String str=null;
-			double k=Double.parseDouble(number.substring(1));
-			nu=Integer.toBinaryString((int)k);
+			int k=Integer.parseInt(number.substring(1));
+			nu=Integer.toBinaryString(k);
 			for(int i=0;i<length-nu.length();i++){
 				num+='0';
 			}
@@ -55,6 +61,7 @@ public class ALU {
 			StringBuffer s=new StringBuffer(str.substring(4, str.length()));
 			s=s.reverse();
 			num=s.toString();
+		}
 		}
 		return num;
 	}

@@ -43,11 +43,11 @@ public class ALUTest2 {
 	}
 	@Test
 	public void test2_8(){
-		assertEquals("10000000000000000000000000000000", alu.integerRepresentation("-2147483648", 32));
+		assertEquals("10000000000000000000000000000000", alu.integerRepresentation("-2147483648",32));
 	}
 	@Test
 	public void test2_9(){
-		assertEquals("01111111111111111111111111111111", alu.integerRepresentation("2147483647", 32));
+		assertEquals("01111111111111111111111111111111", alu.integerRepresentation("2147483647",32));
 	}
 	@Test
 	public void test2_10(){
