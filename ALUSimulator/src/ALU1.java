@@ -70,7 +70,7 @@ import org.junit.Test;
 			assertEquals("000000001",alu.claAdder("10000000","10000000",'0'));
 		}*/
 		//@Test
-		/*public void test13() {
+	/*	public void test13() {
 			assertEquals("11111001110",alu.integerAddition("1000101","0100010",'0',10));
 			assertEquals("11110",alu.integerAddition("1101","0010",'0',4));
 			assertEquals("001110",alu.integerAddition("0101","0010",'0',5));
@@ -85,34 +85,34 @@ import org.junit.Test;
 			assertEquals("01011",alu.integerAddition("1000","1101",'0',4));
 			assertEquals("00001",alu.integerAddition("1001","0110",'1',4));
 		}
-		@Test
-		public void test14() {
+		@Test*/
+		//public void test14() {
 //			assertEquals("10110",alu.integerSubtraction("0101","1010",4));
 //			assertEquals("000010110",alu.integerSubtraction("0101","1010",8));
 		//	assertEquals("01001",alu.integerSubtraction("0111","0011",4));
 //			assertEquals("01000",alu.integerSubtraction("0100","0000",4));
 //			assertEquals("10110",alu.integerSubtraction("1000","1101",4));
 //			assertEquals("00111",alu.integerSubtraction("1001","0110",4));
-		}
-		@Test
-		public void test15() {
+		//}
+		//@Test
+		/*public void test15() {
 //			assertEquals("00000110",alu.integerMultiplication("0011", "0010", 4));
 //			assertEquals("11111000",alu.integerMultiplication("1110", "0100", 4));
 //			assertEquals("00001000",alu.integerMultiplication("0100", "0010", 4));
 //			assertEquals("00000110",alu.integerMultiplication("1101", "1110", 4));
 		}
-		@Test
-		public void test16() {
-			assertEquals("00100001",alu.integerDivision("0111", "0011", 4));
-			assertEquals("11100001",alu.integerDivision("0111", "1101", 4));
-			assertEquals("11101111",alu.integerDivision("1001", "0011", 4));
-			assertEquals("00101111",alu.integerDivision("1001", "1101", 4));
-			assertEquals("00110000",alu.integerDivision("0110", "0010", 4));
-			assertEquals("00110000",alu.integerDivision("1010", "1110", 4));
-			assertEquals("11010000",alu.integerDivision("0110", "1110", 4));
-			assertEquals("11010000",alu.integerDivision("1010", "0010", 4));
-		}
 		@Test*/
+		public void test16() {
+			assertEquals("000100001",alu.integerDivision("0111", "0011", 4));
+			assertEquals("011100001",alu.integerDivision("0111", "1101", 4));
+			assertEquals("011101111",alu.integerDivision("1001", "0011", 4));
+			assertEquals("000101111",alu.integerDivision("1001", "1101", 4));
+			assertEquals("000110000",alu.integerDivision("0110", "0010", 4));
+			assertEquals("000110000",alu.integerDivision("1010", "1110", 4));
+			assertEquals("011010000",alu.integerDivision("0110", "1110", 4));
+			assertEquals("011010000",alu.integerDivision("1010", "0010", 4));
+		}
+		@Test
 		public void test3() {
 			assertEquals("11000000111000000000000000000000",alu.floatRepresentation("-7", 8, 23));
 			assertEquals("10111111110000000000000000000000",alu.floatRepresentation("-1.5", 8, 23));
