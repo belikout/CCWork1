@@ -17,15 +17,9 @@ public class ALU {
 		// TODO YOUR CODE HERE.
 		String nu=null;
 		String num=null;
-		if(Double.parseDouble(number)==(-1)*Math.pow(2, length-1)){
-			num="1";
-			for(int i=0;i<length-1;i++){
-				num+='0';
-			}
-		}else{
 		if(number.charAt(0)!='-'){
-			int k=Integer.parseInt(number);
-			nu=Integer.toBinaryString(k);
+			double k=Double.parseDouble(number);
+			nu=Integer.toBinaryString((int)k);
 			for(int i=0;i<length-nu.length();i++){
 				num+='0';
 			}
@@ -35,8 +29,8 @@ public class ALU {
 		else{
 			int m=0;
 			String str=null;
-			int k=Integer.parseInt(number.substring(1));
-			nu=Integer.toBinaryString(k);
+			double k=Double.parseDouble(number.substring(1));
+			nu=Integer.toBinaryString((int)k);
 			for(int i=0;i<length-nu.length();i++){
 				num+='0';
 			}
@@ -61,7 +55,6 @@ public class ALU {
 			StringBuffer s=new StringBuffer(str.substring(4, str.length()));
 			s=s.reverse();
 			num=s.toString();
-		}
 		}
 		return num;
 	}
@@ -802,7 +795,108 @@ public class ALU {
 	 */
 	public String floatAddition (String operand1, String operand2, int eLength, int sLength, int gLength) {
 		// TODO YOUR CODE HERE.
-		return null;
+		String Zero="";
+		for(int i=0;i<eLength+sLength;i++)
+			Zero+='0';
+		String s=null;
+		String sign1=operand1.substring(0,1);
+		String sign2=operand2.substring(0,1);
+		String sign=null;
+		String s1="1"+operand1.substring(1+eLength,1+eLength+sLength);
+		String s2="1"+operand2.substring(1+eLength,1+eLength+sLength);
+		for(int i=0;i<gLength;i++){
+			s1+='0';
+			s2+='0';
+		}
+		//System.out.println(s2);
+		//System.out.println(s1);
+		String e=null;
+		String e1=operand1.substring(1,eLength+1);
+		String e2=operand2.substring(1,eLength+1);;
+		//分别判断两个数是否为零,若为零返回相应的数，Over.都不为零则继续步骤
+		if(getValue(operand1.substring(1))==0)
+			return "0"+operand2;
+		if(getValue(operand1.substring(1))==0)
+			return "0"+operand1;
+		//判断指数大小是否相同
+		int ee1=getValue(operand1.substring(1, eLength+1));
+		int ee2=getValue(operand2.substring(1, eLength+1));
+		int ee=ee1;
+		//System.out.println(ee);
+		/*阶码大小不同
+		 * 进行对齐操作直到对齐进行阶码相同后的步骤
+		 * 若对齐过程中小的数位数移为0了则返回另一个数，Over.
+		 */
+		if(ee1!=ee2){
+			//以下是移为0的情况
+			if(ee1>ee2){
+				ee=ee1;
+				e=e1;
+				for(int i=0;i<ee1-ee2;i++){
+					s2=logRightShift(s2, 1);
+					if(getValue(s2)==0)
+						return "0"+operand1;
+				}
+			}
+			if(ee2>ee1){
+				ee=ee2;
+				e=e2;
+				for(int i=0;i<ee2-ee1;i++){
+					s1=logRightShift(s1, 1);
+					if(getValue(s1)==0)
+						return "0"+operand2;
+				}
+			}
+		}
+		//System.out.println(ee);
+	//	System.out.println(s1);
+		//System.out.println(s2);
+		/*阶码大小相同或已经成功完成移位
+		 * 进行尾数的带符号加法
+		 * 若尾数等于0，返回0，Over.若尾数不为0，进行后续操作
+		 */
+		s=signedAddition(sign1+s1,sign2+s2,sLength+gLength+4).substring(1);
+		//System.out.println(s);
+		sign=s.substring(0, 1);
+		s=s.substring(3);
+		//System.out.println(s);
+		if(getValue(s)==0)
+			return "0"+sign+Zero;
+	    boolean of=false;
+	    if(s.charAt(0)=='1')
+	    	of=true;
+	    s=s.substring(1);
+		//判断尾数是否溢出，若未溢出进行则后续操作
+		//若尾数溢出，阶码进行加一操作，若阶码未溢出则进行后续操作，若阶码溢出则返回溢出结果，Over.
+		if(of){
+			ee=ee+1;
+			e=oneAdder("0"+e).substring(2);
+		}
+		if(ee>=Math.pow(2, eLength))
+			return "1"+sign+e+s.substring(1,1+sLength);
+		//判断结果是否规格化，若规格化则返回结果，Over.
+		//System.out.println(s);
+		if(s.charAt(0)=='1')
+			return "0"+sign+e+s.substring(1,1+sLength);
+		//若结果未规格化，则对尾数进行左移操作直到规格化，若能正常规格化就返回该结果，Over.
+		int n=0;
+		if(s.charAt(0)=='0'){
+			while(s.charAt(n)=='0')
+				n++;
+		}
+		String opn=oneAdder(negation("0"+Integer.toString(n))).substring(1);
+		s=leftShift(s,n);
+		s=s.substring(1,1+sLength);
+		
+		e=adder("0"+e,opn,'0',eLength+4).substring(5);
+		//System.out.println(s);
+		//System.out.println(e);
+		if(n<=ee){
+			return "0"+sign+e+s;
+		}
+		//若规格化过程中指数发生了下溢，则返回下溢结果，Over
+		else
+			return "1"+sign+e+s;
 	}
 	
 	/**
@@ -817,7 +911,15 @@ public class ALU {
 	 */
 	public String floatSubtraction (String operand1, String operand2, int eLength, int sLength, int gLength) {
 		// TODO YOUR CODE HERE.
-		return null;
+		char temp = operand2.charAt(0);
+		operand2 = operand2.substring(1);
+		if(temp=='0')
+			operand2 = "1" + operand2;
+		else
+			operand2 = "0" + operand2;
+		//System.out.println(operand1);
+		//System.out.println(operand2);
+		return floatAddition(operand1,operand2,eLength,sLength,gLength);
 	}
 	
 	/**
@@ -847,5 +949,13 @@ public class ALU {
 	public String floatDivision (String operand1, String operand2, int eLength, int sLength) {
 		// TODO YOUR CODE HERE.
 		return null;
+	}
+	public int getValue(String x){
+		int value = 0;
+		for(int i=x.length()-1;i>=0;i--){
+		if(x.charAt(i)=='1')
+			value = value + (int)Math.pow(2,x.length()-1-i);
+		}
+		return value;
 	}
 }
