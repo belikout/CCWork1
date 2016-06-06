@@ -183,17 +183,23 @@ import org.junit.Test;
 					+ "10000101"
 					+ "00000101000000000000000", 8, 23));
 		}
-		
-		/*public void test17() {
+		@Test
+		public void test17() {
 			//缁堜簬瀹屾垚浜嗭紝澶紑蹇冧簡o(*锟ｂ柦锟�*)銉�
 			assertEquals(
-					alu.floatRepresentation("3", 23, 8)+"0",
+					"0"+alu.floatRepresentation("6", 23, 8),
 					alu.floatAddition(
 							alu.floatRepresentation("1", 23, 8), 
-							alu.floatRepresentation("2", 23, 8)
+							alu.floatRepresentation("5", 23, 8)
 							, 23, 8, 0));
 			assertEquals(
-					alu.floatRepresentation("1.4", 23, 8)+"0",
+					"0"+alu.floatRepresentation("6",6,9),
+					alu.floatAddition(
+							alu.floatRepresentation("2.25",6,9), 
+							alu.floatRepresentation("3.75",6,9)
+							, 6,9, 0));
+			/*assertEquals(
+					"0"+alu.floatRepresentation("1.4", 23, 8),
 					alu.floatAddition(
 							alu.floatRepresentation("1.1", 23, 8), 
 							alu.floatRepresentation("0.3", 23, 8)
@@ -246,12 +252,7 @@ import org.junit.Test;
 							alu.floatRepresentation("85.643", 9, 6), 
 							alu.floatRepresentation("0.37", 9, 6)
 							, 9, 6, 6));
-			assertEquals(
-					alu.floatRepresentation("226", 9, 6)+"0",
-					alu.floatAddition(
-							alu.floatRepresentation("217.36", 9, 6), 
-							alu.floatRepresentation("8.79", 9, 6)
-							, 9, 6, 0));
+			
 			assertEquals(
 					alu.floatRepresentation("226", 9, 6)+"0",
 					alu.floatAddition(
@@ -311,10 +312,10 @@ import org.junit.Test;
 									+ "0000"
 									+ "0000"
 									+ "0001"
-							, 23, 8,0));
+							, 23, 8,0));*/
 							
 		}
-		@Test*/
+		
 	/*	public void test18() {
 			assertEquals(
 					alu.floatRepresentation("3", 23, 8)+"0",

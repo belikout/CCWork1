@@ -795,6 +795,8 @@ public class ALU {
 	 */
 	public String floatAddition (String operand1, String operand2, int eLength, int sLength, int gLength) {
 		// TODO YOUR CODE HERE.
+		int el=eLength+4-eLength%4;
+		int sl=sLength+gLength+4-(sLength+gLength)%4;
 		String Zero="";
 		for(int i=0;i<eLength+sLength;i++)
 			Zero+='0';
@@ -810,9 +812,10 @@ public class ALU {
 		}
 		//System.out.println(s2);
 		//System.out.println(s1);
-		String e=null;
+		
 		String e1=operand1.substring(1,eLength+1);
-		String e2=operand2.substring(1,eLength+1);;
+		String e2=operand2.substring(1,eLength+1);
+		String e=e1;
 		//分别判断两个数是否为零,若为零返回相应的数，Over.都不为零则继续步骤
 		if(getValue(operand1.substring(1))==0)
 			return "0"+operand2;
@@ -848,17 +851,18 @@ public class ALU {
 				}
 			}
 		}
-		//System.out.println(ee);
-	//	System.out.println(s1);
-		//System.out.println(s2);
+		/*System.out.println(e);
+		System.out.println(ee);
+		System.out.println(s1);
+		System.out.println(s2);*/
 		/*阶码大小相同或已经成功完成移位
 		 * 进行尾数的带符号加法
 		 * 若尾数等于0，返回0，Over.若尾数不为0，进行后续操作
 		 */
-		s=signedAddition(sign1+s1,sign2+s2,sLength+gLength+4).substring(1);
+		s=signedAddition(sign1+s1,sign2+s2,sl).substring(1);
 		//System.out.println(s);
 		sign=s.substring(0, 1);
-		s=s.substring(3);
+		s=s.substring(sl-sLength-gLength-1);
 		//System.out.println(s);
 		if(getValue(s)==0)
 			return "0"+sign+Zero;
@@ -868,17 +872,22 @@ public class ALU {
 	    s=s.substring(1);
 		//判断尾数是否溢出，若未溢出进行则后续操作
 		//若尾数溢出，阶码进行加一操作，若阶码未溢出则进行后续操作，若阶码溢出则返回溢出结果，Over.
+	   // System.out.println(e);
 		if(of){
+			s="11"+s.substring(2);
 			ee=ee+1;
 			e=oneAdder("0"+e).substring(2);
 		}
+		//System.out.println(e);
 		if(ee>=Math.pow(2, eLength))
 			return "1"+sign+e+s.substring(1,1+sLength);
 		//判断结果是否规格化，若规格化则返回结果，Over.
+		//System.out.println(e);
 		//System.out.println(s);
 		if(s.charAt(0)=='1')
 			return "0"+sign+e+s.substring(1,1+sLength);
 		//若结果未规格化，则对尾数进行左移操作直到规格化，若能正常规格化就返回该结果，Over.
+		
 		int n=0;
 		if(s.charAt(0)=='0'){
 			while(s.charAt(n)=='0')
@@ -887,8 +896,7 @@ public class ALU {
 		String opn=oneAdder(negation("0"+Integer.toString(n))).substring(1);
 		s=leftShift(s,n);
 		s=s.substring(1,1+sLength);
-		
-		e=adder("0"+e,opn,'0',eLength+4).substring(5);
+		e=adder("0"+e,opn,'0',el).substring(1+el-eLength);
 		//System.out.println(s);
 		//System.out.println(e);
 		if(n<=ee){
