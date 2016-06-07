@@ -87,6 +87,7 @@ public class ALU {
 		String []sp=number.split("\\.");
 		String one=Integer.toBinaryString(Integer.parseInt(sp[0]));
 		Double two0=Double.parseDouble(number)-Double.parseDouble(sp[0]);
+		Double two1=two0;
 		int p=-1;
 		if(two0==0){
 			two="00000";
@@ -113,6 +114,10 @@ public class ALU {
 			if(xone>=Math.pow(2, eLength)){
 				e=integerRepresentation("0", eLength);
 				s=two.substring((int)Math.pow(2, eLength-1)-1);
+			}
+			if(two1==0){
+				e=integerRepresentation("0", eLength);
+				s=integerRepresentation("0", sLength);
 			}
 			else{
 				e=integerRepresentation(Double.toString(Math.pow(2,eLength-1)-1-xone), eLength);
@@ -874,7 +879,7 @@ public class ALU {
 		//若尾数溢出，阶码进行加一操作，若阶码未溢出则进行后续操作，若阶码溢出则返回溢出结果，Over.
 	   // System.out.println(e);
 		if(of){
-			s="11"+s.substring(2);
+			s="1"+s.substring(0,s.length()-1);
 			ee=ee+1;
 			e=oneAdder("0"+e).substring(2);
 		}
