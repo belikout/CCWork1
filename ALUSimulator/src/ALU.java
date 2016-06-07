@@ -946,9 +946,129 @@ public class ALU {
 	 */
 	public String floatMultiplication (String operand1, String operand2, int eLength, int sLength) {
 		// TODO YOUR CODE HERE.
-		return null;
+		String inf="";
+		for(int i=0;i<eLength;i++)
+			inf+='1';
+		for(int i=0;i<sLength;i++)
+			inf+='0';
+		String Zero="";
+		String expo="";
+		for(int i=0;i<eLength-1;i++)
+			expo+='1';
+		expo='0'+expo;
+		String s=null;
+		String sign1=operand1.substring(0,1);
+		String sign2=operand2.substring(0,1);
+		String sign=null;
+		if(sign1.equals(sign2))
+			sign="0";
+		else
+			sign="1";
+		String s1="1"+operand1.substring(1+eLength,1+eLength+sLength);
+		String s2="1"+operand2.substring(1+eLength,1+eLength+sLength);
+		String e=null;
+		int ee1=getValue(operand1.substring(1, eLength+1));
+		int ee2=getValue(operand2.substring(1, eLength+1));
+		
+		for(int i=0;i<eLength+sLength;i++)
+			Zero+='0';
+		//判断两操作数是否为0，为0则返回0
+		if(getValue(operand1.substring(1))==0)
+			return "0"+sign+Zero;
+		if(getValue(operand1.substring(1))==0)
+			return "0"+sign+Zero;
+		//两操作数指数相加，减去偏移量
+		int ee=ee1+ee2-getValue(expo);
+		//System.out.println(ee);
+		//判断指数溢出与否，溢出则报告溢出（上溢和下溢），Over.未溢出则继续下面步骤
+		if(ee<0)
+			return "0"+sign+Zero;
+		if(ee>=(Math.pow(2, eLength)))
+			return "1"+sign+inf;	
+		if(ee>=0&&ee<=(Math.pow(2, eLength)-1))
+			e=noSignIntegerRepresent(ee,eLength);
+		//尾数相乘
+		s=noSignMultiplication(s1,s2);
+		//System.out.println(s);
+		//判断尾数溢出与否，溢出指数加一，再判断指数溢出与否
+		//规格化
+		if(s.length()==2*sLength+2){
+			ee=ee+1;
+			s=s.substring(1);
+			if(s.charAt(0)=='1')
+				s=s.substring(1, 1+sLength);
+			else
+				s=s.substring(0,sLength);
+			//System.out.println(s);
+			if(ee>=(Math.pow(2, eLength)))
+				return "1"+sign+inf;	
+			if(ee>=0&&ee<=(Math.pow(2, eLength)-1))
+				e=noSignIntegerRepresent(ee,eLength);
+			}
+		else
+			s=s.substring(1,1+sLength);
+		return "0"+sign+e+s;
 	}
-	
+	public  String noSignMultiplication(String operand1,String operand2){
+		String s="0";
+		String s2="";
+		for(int i=operand1.length()-1;i>=0;i--){
+			if(operand1.charAt(i)=='1'){
+				s2=addLeftShift(operand2,operand1.length()-i-1);
+				s=noSignAddition(s,s2);
+			}
+		}
+		//s=s.substring(0, length+2);
+				return s;
+		}
+		public  String noSignAddition(String operand1,String operand2){
+			int l1=operand1.length();
+			int l2=operand2.length();
+			String s1=operand1;
+			String s2=operand2;
+			String s="";
+			String temp="";
+			char c='0';
+			if(l1>l2)
+				for(int i=0;i<l1-l2;i++)
+					s2='0'+s2;
+			if(l2>l1)
+				for(int i=0;i<l2-l1;i++)
+					s1='0'+s1;
+			
+			for(int i=s1.length()-1;i>=0;i--){
+				temp=fullAdder(s1.charAt(i),s2.charAt(i),c);
+				s=temp.charAt(1)+s;
+				c=temp.charAt(0);
+			}
+			if(c=='1')
+				s='1'+s;
+			return s;
+			}
+		public String addLeftShift (String operand, int n) {
+			// TODO YOUR CODE HERE.
+			String num=null;
+			num=operand;
+			for(int i=0;i<n;i++){
+				num+='0';
+			}
+			return num;
+		}
+	public  String noSignIntegerRepresent(int n,int length){
+		int s=n;
+		String result="";
+		while(s>0){
+			int k=s%2;
+			if(k==1)
+				result='1'+result;
+			else
+				result='0'+result;
+			s=s/2;
+		}
+		for(int i=0;i<length-result.length();i++)
+			result='0'+result;
+			return result;
+		}
 
 	/**
 	 * 浮点数除法，可调用{@link #integerDivision(String, String, int) integerDivision}等方法实现。<br/>
