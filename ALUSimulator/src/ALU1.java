@@ -127,7 +127,7 @@ import org.junit.Test;
 //			assertEquals("00000000100000000000000000000000",alu.floatRepresentation(Float.MIN_NORMAL+"", 23, 8));
 //			assertEquals("00000000000000000000000000000010",alu.floatRepresentation(Float.MIN_VALUE*2+"", 23, 8));
 		}
-	@Test
+	//@Test
 		public void test4() {
 //			assertEquals("0"
 //					+ "11111111111"
@@ -156,7 +156,7 @@ import org.junit.Test;
 					"1"
 					+ "00000000"
 					+ "00000000000000000000000", 8, 23));
-			assertEquals("Inf",alu.floatTrueValue(
+			assertEquals("+Inf",alu.floatTrueValue(
 					"0"
 					+ "11111111"
 					+ "00000000000000000000000", 8, 23));
@@ -497,57 +497,57 @@ import org.junit.Test;
 							"0"+ "11111111"+ "100"	+ "0000"+ "0000"+ "0000"+ "0000"+ "0000",
 							"0"+ "11000000"+ "000"	+ "0000"+ "0000"+ "0000"+ "0000"+ "0000", 23, 8));*/
 		}
-		
-		/*public void test20() {
+		@Test
+		public void test20() {
 			assertEquals(
-					alu.floatRepresentation("0.875", 23, 8),
+					"0"+alu.floatRepresentation("0.875", 23, 8),
 					alu.floatDivision(
 							alu.floatRepresentation("0.4375", 23, 8), 
 							alu.floatRepresentation("0.5", 23, 8), 23, 8));
 			assertEquals(
-					alu.floatRepresentation("-0.875", 23, 8),
+					"0"+alu.floatRepresentation("-0.875", 23, 8),
 					alu.floatDivision(
 							alu.floatRepresentation("-0.4375", 23, 8), 
 							alu.floatRepresentation("0.5", 23, 8), 23, 8));
 			assertEquals(
-					alu.floatRepresentation("0.875", 23, 8),
+					"0"+alu.floatRepresentation("0.875", 23, 8),
 					alu.floatDivision(
 							alu.floatRepresentation("-0.4375", 23, 8), 
 							alu.floatRepresentation("-0.5", 23, 8), 23, 8));
 			assertEquals(
-					alu.floatRepresentation("-0.875", 23, 8),
+					"0"+alu.floatRepresentation("-0.875", 23, 8),
 					alu.floatDivision(
 							alu.floatRepresentation("0.4375", 23, 8), 
 							alu.floatRepresentation("-0.5", 23, 8), 23, 8));
 			assertEquals(
-					alu.floatRepresentation("0", 23, 8),
+					"0"+alu.floatRepresentation("-0", 23, 8),
 					alu.floatDivision(
 							alu.floatRepresentation("0", 23, 8), 
 							alu.floatRepresentation("-0.5", 23, 8), 23, 8));
 			assertEquals(
-					"0"+ "11111111"
+					"1"+"0"+ "11111111"
 							+ "00000000000000000000000",
 					alu.floatDivision(
-							alu.floatRepresentation("0.75", 23, 8), 
-							alu.floatRepresentation("0", 23, 8), 23, 8));
+							alu.floatRepresentation("0.75", 8,23), 
+							alu.floatRepresentation("0", 8,23), 8,23));
 			assertEquals(
-					"1"+ "11111111"
+					"1"+"1"+ "11111111"
 							+ "00000000000000000000000",
 					alu.floatDivision(
-							alu.floatRepresentation("-0.75", 23, 8), 
-							alu.floatRepresentation("0", 23, 8), 23, 8));
+							alu.floatRepresentation("-0.75", 8,23), 
+							alu.floatRepresentation("0",8,23), 8,23));
 			assertEquals(
-					"1"+ "01111000"+ "011"	+ "1100"+ "0101"+ "0010"+ "0110"+ "0100",
+					"0"+"1"+ "01111000"+ "011"	+ "1100"+ "0101"+ "0010"+ "0110"+ "0100",
 					alu.floatDivision(
-							alu.floatRepresentation("0.75", 23, 8), 
-							alu.floatRepresentation("-65.25", 23, 8), 23, 8));
+							alu.floatRepresentation("0.75",8,23), 
+							alu.floatRepresentation("-65.25",8,23), 8,23));
 			assertEquals(
-					alu.floatRepresentation("-0.01149425283074379", 23, 8),
+					"0"+alu.floatRepresentation("-0.01149425283074379",8,23),
 					alu.floatDivision(						
-							alu.floatRepresentation("0.75", 23, 8), 
-							alu.floatRepresentation("-65.25", 23, 8), 23, 8));
-			assertEquals(
-					"0"
+							alu.floatRepresentation("0.75", 8,23), 
+							alu.floatRepresentation("-65.25",8,23),8,23));
+			/*assertEquals(
+					"00"
 					+ "00000000"
 					+ "11100000000000000000000",
 					alu.floatDivision(
@@ -556,7 +556,7 @@ import org.junit.Test;
 							"0"
 							+ "10000000"
 							+ "00000000000000000000000", 
-							 23, 8));
+							8,23));
 			assertEquals(
 					"0"
 					+ "00000000"
@@ -578,8 +578,8 @@ import org.junit.Test;
 							"0"
 							+ "00000001"
 							+ "11000000000000000000000", 
-							 23, 8));
-		}*/
+							 23, 8));*/
+		}
 	}
 
 

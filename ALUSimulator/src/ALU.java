@@ -17,6 +17,12 @@ public class ALU {
 		// TODO YOUR CODE HERE.
 		String nu=null;
 		String num=null;
+		if(Double.parseDouble(number)==(-1)*Math.pow(2, length-1)){
+			num="1";
+			for(int i=0;i<length-1;i++){
+				num+='0';
+			}
+		}else{
 		if(number.charAt(0)!='-'){
 			double k=Double.parseDouble(number);
 			nu=Integer.toBinaryString((int)k);
@@ -55,6 +61,7 @@ public class ALU {
 			StringBuffer s=new StringBuffer(str.substring(4, str.length()));
 			s=s.reverse();
 			num=s.toString();
+		}
 		}
 		return num;
 	}
@@ -319,8 +326,12 @@ public class ALU {
 					}
 				}
 				//结果为无穷
-				if(sZero==true)
-					return result+"Inf";
+				if(sZero==true){
+					if(operand.charAt(0)=='1')
+						return result+"Inf";
+						else
+							return '+'+"Inf";	
+				}
 		      //非数
 				else{
 					return "NaN";
@@ -1065,7 +1076,8 @@ public class ALU {
 				result='0'+result;
 			s=s/2;
 		}
-		for(int i=0;i<length-result.length();i++)
+		int l=result.length();
+		for(int i=0;i<length-l;i++)
 			result='0'+result;
 			return result;
 		}
@@ -1081,7 +1093,72 @@ public class ALU {
 	 */
 	public String floatDivision (String operand1, String operand2, int eLength, int sLength) {
 		// TODO YOUR CODE HERE.
-		return null;
+		String inf="";
+		for(int i=0;i<eLength;i++)
+			inf+='1';
+		for(int i=0;i<sLength;i++)
+			inf+='0';
+		String Zero="";
+		String expo="";
+		for(int i=0;i<eLength-1;i++)
+			expo+='1';
+		expo='0'+expo;
+		int sl=sLength*2+4-sLength*2%4;
+		String s=null;
+		String sign1=operand1.substring(0,1);
+		String sign2=operand2.substring(0,1);
+		String sign=null;
+		if(sign1.equals(sign2))
+			sign="0";
+		else
+			sign="1";
+		String s1="1"+operand1.substring(1+eLength,1+eLength+sLength);
+		String s2="1"+operand2.substring(1+eLength,1+eLength+sLength);
+		
+		String e=null;
+		int ee1=getValue(operand1.substring(1, eLength+1));
+		int ee2=getValue(operand2.substring(1, eLength+1));
+		
+		for(int i=0;i<eLength+sLength;i++)
+			Zero+='0';
+		//判断被除数是不是0，是0就返回无穷，除数是不是0，是0返回0
+		if(getValue(operand1.substring(1))==0)
+				return "0"+sign+Zero;
+		if(getValue(operand2.substring(1))==0)
+				return "1"+sign+inf;
+		//指数相减加上偏移量
+		int ee=ee1-ee2+getValue(expo);
+		//判断指数溢出否（上溢，下溢），返回相应结果
+		if(ee<0)
+			return "0"+sign+Zero;
+		if(ee>=(Math.pow(2, eLength)))
+			return "1"+sign+inf;	
+		if(ee>=0&&ee<=(Math.pow(2, eLength)-1))
+			e=noSignIntegerRepresent(ee,eLength);
+		//尾数相除
+		String s3="";
+		for(int i=0;i<sLength;i++)
+			s3+='0';
+		s=integerDivision("0"+s1+s3,"0"+s2,sl).substring(1+sl-sLength-1, 1+sl);
+		//规格化
+		if(s.charAt(0)=='1')
+			return "0"+sign+e+s.substring(1);
+		s=s.substring(1);
+		int n=0;
+		for(;n<s.length();n++){
+			if(s.charAt(n)=='1')
+				break;
+		}
+		n=n+1;
+		for(int i=n;i>=1;i--)
+			s=s.substring(1)+'0';
+		ee=ee-n;	
+		if(ee<0)
+			return "0"+sign+Zero;
+		if(ee>=0&&ee<=(Math.pow(2, eLength)-1))
+			e=noSignIntegerRepresent(ee,eLength);
+		
+		return "0"+sign+e+s;
 	}
 	public int getValue(String x){
 		int value = 0;
