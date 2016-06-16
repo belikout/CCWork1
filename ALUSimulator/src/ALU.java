@@ -78,11 +78,12 @@ public class ALU {
 	 */
 	public String floatRepresentation (String number, int eLength, int sLength) {
 		// TODO YOUR CODE HERE.
-		String num=null;
-		String two=null;
-	   
+		String num="";
+		String two="";
+	    boolean k=true;
 	    String e;
 	    String s;
+	   
 	    int xone=0;
 	    if(number.charAt(0)=='-'){
 	    	num+='1';
@@ -92,9 +93,11 @@ public class ALU {
 	    	num+='0';
 	    }
 		String []sp=number.split("\\.");
-		String one=Integer.toBinaryString(Integer.parseInt(sp[0]));
-		Double two0=Double.parseDouble(number)-Double.parseDouble(sp[0]);
-		Double two1=two0;
+		String one=Integer.toBinaryString(Integer.parseInt(sp[0]));//整数部分的值
+		Double two0=Double.parseDouble(number)-Double.parseDouble(sp[0]);//小数部分的值
+		Double two00=two0;
+		System.out.println(one);
+	    System.out.println(two0);
 		int p=-1;
 		if(two0==0){
 			two="00000";
@@ -108,26 +111,27 @@ public class ALU {
 			}
 			p--;
 		}
-		
-		two=two.substring(4, two.length());
-		//System.out.println(two);
+		System.out.println(two);
 		for(int i=0;i<two.length();i++){
 			if(two.charAt(i)=='1'){
 				xone=i+1;
 				break;
 			}
 		}
+		System.out.println(Math.pow(2, eLength-1));
 		if(one.equals("0")){
-			if(xone>=Math.pow(2, eLength)){
+			if(xone>=Math.pow(2, eLength-1)-1){
 				e=integerRepresentation("0", eLength);
 				s=two.substring((int)Math.pow(2, eLength-1)-1);
+				System.out.println("ok");
+				System.out.println(s);
 			}
-			if(two1==0){
+			else if(two00==0){
 				e=integerRepresentation("0", eLength);
 				s=integerRepresentation("0", sLength);
 			}
 			else{
-				e=integerRepresentation(Double.toString(Math.pow(2,eLength-1)-1-xone), eLength);
+				e=integerRepresentation(Integer.toString((int)Math.pow(2, eLength-1)-1-xone), eLength);
 				s=two.substring(xone);
 			}
 		}
@@ -142,7 +146,7 @@ public class ALU {
 			}
 		}
 		num+=e;
-		//System.out.println(s);
+		System.out.println(e);
 		if(s.length()==sLength){
 		}
 		else  if(s.length()>sLength){
@@ -154,11 +158,9 @@ public class ALU {
 				s+='0';
 			}
 		}
-		//System.out.println(s);
-		num+=s;
-		num=num.substring(4, num.length());
-		return num;
 		
+		num+=s;
+		return num;
 	}
 	
 	/**
@@ -728,20 +730,24 @@ public class ALU {
 			remainder = integerSubtraction(remainder,td,length).substring(1);
 		if(remainder.charAt(0)!=operand1.charAt(0)&&remainder.charAt(0)=='1')
 			remainder = integerAddition(remainder,td,length).substring(1);
-		if(remainder.equals(divisor)){
+		/*if(remainder.equals(divisor)){
 			remainder=integerSubtraction(remainder,divisor,length).substring(1);
 			quotient=oneAdder(quotient).substring(1);
 		}
 		if(remainder.equals(oneAdder(negation(divisor)).substring(1))){
 			remainder=integerAddition(remainder,divisor,length).substring(1);
 			quotient=integerSubtraction(quotient,"0001",length).substring(1);
-		}
+		}*/
 		//System.out.println(remainder);
 		char p='0';
-		if(Integer.parseInt(integerTrueValue(remainder))!=Integer.parseInt(integerTrueValue(operand1))%Integer.parseInt(integerTrueValue(operand2)))
-			p='1';
-		if(Integer.parseInt(integerTrueValue(quotient))!=Integer.parseInt(integerTrueValue(operand1))/Integer.parseInt(integerTrueValue(operand2)))
-			p='1';
+		/*if(Integer.parseInt(integerTrueValue(remainder))!=Integer.parseInt(integerTrueValue(operand1))%Integer.parseInt(integerTrueValue(operand2)))
+		p='1';
+	if(Integer.parseInt(integerTrueValue(quotient))!=Integer.parseInt(integerTrueValue(operand1))/Integer.parseInt(integerTrueValue(operand2)))
+		p='1';*/
+	if(quotient.charAt(0)=='1'&&operand1.charAt(0)==operand2.charAt(0))
+		p='1';
+	if(quotient.charAt(0)=='0'&&operand1.charAt(0)!=operand2.charAt(0))
+		p='1';
 		return p+quotient+remainder;
 	}
 	
@@ -875,10 +881,10 @@ public class ALU {
 		 * 进行尾数的带符号加法
 		 * 若尾数等于0，返回0，Over.若尾数不为0，进行后续操作
 		 */
-		s=signedAddition(sign1+s1,sign2+s2,sl).substring(1);
+		s=signedAddition(sign1+s1,sign2+s2,sl+4).substring(1);
 		//System.out.println(s);
 		sign=s.substring(0, 1);
-		s=s.substring(sl-sLength-gLength-1);
+		s=s.substring(sl+4-sLength-gLength-1);
 		//System.out.println(s);
 		if(getValue(s)==0)
 			return "0"+sign+Zero;
@@ -909,7 +915,7 @@ public class ALU {
 			while(s.charAt(n)=='0')
 				n++;
 		}
-		String opn=oneAdder(negation("0"+Integer.toString(n))).substring(1);
+		String opn=oneAdder(negation("0"+Integer.toBinaryString(n))).substring(1);
 		s=leftShift(s,n);
 		s=s.substring(1,1+sLength);
 		e=adder("0"+e,opn,'0',el).substring(1+el-eLength);
@@ -1139,7 +1145,7 @@ public class ALU {
 		String s3="";
 		for(int i=0;i<sLength;i++)
 			s3+='0';
-		s=integerDivision("0"+s1+s3,"0"+s2,sl).substring(1+sl-sLength-1, 1+sl);
+		s=integerDivision0("0"+s1+s3,"0"+s2,sl).substring(1+sl-sLength-1, 1+sl);
 		//规格化
 		if(s.charAt(0)=='1')
 			return "0"+sign+e+s.substring(1);
@@ -1167,5 +1173,101 @@ public class ALU {
 			value = value + (int)Math.pow(2,x.length()-1-i);
 		}
 		return value;
+	}
+	public String integerDivision0 (String operand1, String operand2, int length) {
+		// TODO YOUR CODE HERE.
+		while(operand1.length()<length)
+			operand1 = operand1.charAt(0)+operand1;
+		while(operand2.length()<length)
+			operand2 = operand2.charAt(0)+operand2;
+		boolean neednegation = false;
+		if(operand1.charAt(0)!=operand2.charAt(0))
+			neednegation = true;
+		String remainder = "";
+		for(int i=length;i>=1;i--)
+			remainder = remainder + operand1.charAt(0);
+		String quotient = operand1;
+		String divisor = operand2;
+		String td=divisor;
+		if(divisor.charAt(0)=='1')
+		 td=oneAdder(negation(operand2)).substring(1);
+		String all = remainder + quotient;
+	
+		for(int i=length;i>=1;i--){
+		    boolean k=true;
+			remainder = all.substring(0,length);
+			quotient = all.substring(length);
+			if(remainder.charAt(0)==divisor.charAt(0))
+				remainder = integerSubtraction(remainder,divisor,length).substring(1);
+			else
+				remainder = integerAddition(remainder,divisor,length).substring(1);
+			all = remainder + quotient;
+			if(remainder.charAt(0)==divisor.charAt(0))
+				k=true;
+			else
+				k=false;
+			if(k){
+			all = oneAdder(leftShift(all,1)).substring(1);
+		
+			}
+			else{
+		    all=leftShift(all,1);
+		  
+			}
+			
+		}
+		boolean k=true;
+		remainder = all.substring(0,length);
+		quotient = all.substring(length);
+		if(remainder.charAt(0)==divisor.charAt(0))
+			remainder = integerSubtraction(remainder,divisor,length).substring(1);
+		else
+			remainder = integerAddition(remainder,divisor,length).substring(1);
+		if(remainder.charAt(0)==divisor.charAt(0))
+			k=true;
+		else
+			k=false;
+		//System.out.println(remainder);
+		if(neednegation){
+			if(quotient.charAt(0)=='1'){
+				quotient=oneAdder(leftShift(quotient,1)).substring(1);
+			if(k){
+				quotient=oneAdder(quotient).substring(1);
+			}}
+			else
+				quotient=oneAdder(negation(quotient)).substring(1);
+		}
+		else{
+			if(quotient.charAt(0)=='0'){
+				quotient=leftShift(quotient,1);
+			if(k){
+				quotient=oneAdder(quotient).substring(1);
+			}}
+			else
+				quotient=oneAdder(negation(quotient)).substring(1);
+		}
+		if(remainder.charAt(0)!=operand1.charAt(0)&&remainder.charAt(0)=='0')
+			remainder = integerSubtraction(remainder,td,length).substring(1);
+		if(remainder.charAt(0)!=operand1.charAt(0)&&remainder.charAt(0)=='1')
+			remainder = integerAddition(remainder,td,length).substring(1);
+		if(remainder.equals(divisor)){
+			remainder=integerSubtraction(remainder,divisor,length).substring(1);
+			quotient=oneAdder(quotient).substring(1);
+		}
+		if(remainder.equals(oneAdder(negation(divisor)).substring(1))){
+			remainder=integerAddition(remainder,divisor,length).substring(1);
+			quotient=integerSubtraction(quotient,"0001",length).substring(1);
+		}
+		//System.out.println(remainder);
+		char p='0';
+		/*if(Integer.parseInt(integerTrueValue(remainder))!=Integer.parseInt(integerTrueValue(operand1))%Integer.parseInt(integerTrueValue(operand2)))
+		p='1';
+	if(Integer.parseInt(integerTrueValue(quotient))!=Integer.parseInt(integerTrueValue(operand1))/Integer.parseInt(integerTrueValue(operand2)))
+		p='1';*/
+	if(quotient.charAt(0)=='1'&&operand1.charAt(0)==operand2.charAt(0))
+		p='1';
+	if(quotient.charAt(0)=='0'&&operand1.charAt(0)!=operand2.charAt(0))
+		p='1';
+		return p+quotient+remainder;
 	}
 }
